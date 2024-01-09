@@ -16,3 +16,20 @@ let alien = {
 console.log(alien.laptop)
 
 console.log(alien['work exp'])
+
+
+for(let variable in alien)
+{
+    console.log(variable, alien[variable]);
+}
+
+//using a for loop to print an inner object
+
+console.log(
+    `
+    Alien's laptop
+`)
+for(let key in alien.laptop)
+{
+    console.log(key, alien.laptop[key]);
+}
