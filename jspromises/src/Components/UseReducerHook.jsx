@@ -31,7 +31,7 @@ function UseReducerHook(){
     const addContact = (e) => {
         e.preventDefault();
 
-        const contact = {userId:Date.now(), name:userName, email}
+        const contact = {userId:Date.now(), name:userName, email};
 
         //cleanup
         setEmail("");
@@ -39,8 +39,19 @@ function UseReducerHook(){
 
         dispatch({type:"add", payload:contact});
     }
-    const updateState = () => {
+    const updateState = (e) => {
+        e.preventDefault();
 
+        {dispatch({type:"update", payload:{userId:Date.now(), name:userName, email}})}
+        //cleanup
+        setEmail("");
+        setUserName("");
+    }
+    const editMode = (e, contact) => {
+        e.preventDefault();
+
+        setEmail(contact.email);
+        setUserName(contact.name);
     }
 
     return(
@@ -53,8 +64,7 @@ function UseReducerHook(){
                 <input type={"text"} placeholder={"email"} value={email}
                        onChange={(e) => setEmail(e.target.value)}/>
                 {!edit ? <button type={"submit"}>Add contact</button> : <button type={"button"}
-                onClick={(e) =>
-                {dispatch({type:"update", payload:{}})}}>
+                onClick={(e) => updateState(e)}>
                     update</button>}
             </form>
 
@@ -67,7 +77,8 @@ function UseReducerHook(){
                             <h2>{contact.email}</h2>
                             <button onClick={() => {dispatch({type:"delete", payload:{id:contact.userId}})}}>
                                 Delete</button>
-                            <button onClick={() => update}>edit</button>
+                            <button onClick={(e) => editMode(e, contact)}
+                            >edit</button>
                         </li>);
                     })}
                 </ol>
