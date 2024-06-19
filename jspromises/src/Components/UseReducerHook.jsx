@@ -14,7 +14,7 @@ function reducer(state, action) {
 
 }
 
-const initializer = ()=> {return({userId:Date.now(), name:"", email:""})}
+const initializer = ()=> {return([{userId:Date.now(), name:"stephen ", email:"step@gmail.com"}])}
 
 function UseReducerHook(){
     const [userName, setUserName] = useState("");
@@ -36,6 +36,17 @@ function UseReducerHook(){
                        onChange={(e) => setEmail(e.target.value)}/>
                 <button type={"submit"}>Add contact</button>
             </form>
+
+            <div>
+                <ol>
+                    {state.map((contact) => {
+                        return(<li key={contact.userId}>
+                            <h2>{contact.name}</h2>
+                            <h2>{contact.email}</h2>
+                        </li>)
+                    })}
+                </ol>
+            </div>
 
         </>
     );
