@@ -8,10 +8,16 @@ function reducer(state, action) {
             return[...state, action.payload];
         case "delete":
             return state.filter((contact) => {
-                return action.payload.id !== contact.userId;
+                return action.payload.id !== contact.userId;});
+        case "update":
+            return state.map((contact) => {
+                if(contact.userId === action.payload.userId){
+                    contact.name = action.payload.name;
+                    contact.email = action.payload.email;
+                }
+                return contact;
             });
     }
-
 }
 
 const initializer = ()=> {return([{userId:Date.now(), name:"stephen ", email:"step@gmail.com"}])}
@@ -20,6 +26,7 @@ function UseReducerHook(){
     const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [state, dispatch] = useReducer(reducer,initialState,initializer);
+    const [edit, setEdit] = useState(false);
 
     const addContact = (e) => {
         e.preventDefault();
@@ -32,6 +39,9 @@ function UseReducerHook(){
 
         dispatch({type:"add", payload:contact});
     }
+    const updateState = () => {
+
+    }
 
     return(
         <>
@@ -42,7 +52,10 @@ function UseReducerHook(){
 
                 <input type={"text"} placeholder={"email"} value={email}
                        onChange={(e) => setEmail(e.target.value)}/>
-                <button type={"submit"}>Add contact</button>
+                {!edit ? <button type={"submit"}>Add contact</button> : <button type={"button"}
+                onClick={(e) =>
+                {dispatch({type:"update", payload:{}})}}>
+                    update</button>}
             </form>
 
             <div>
@@ -54,6 +67,7 @@ function UseReducerHook(){
                             <h2>{contact.email}</h2>
                             <button onClick={() => {dispatch({type:"delete", payload:{id:contact.userId}})}}>
                                 Delete</button>
+                            <button onClick={() => update}>edit</button>
                         </li>);
                     })}
                 </ol>
