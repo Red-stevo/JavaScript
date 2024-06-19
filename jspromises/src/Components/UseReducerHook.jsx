@@ -14,18 +14,29 @@ function reducer(state, action) {
 
 }
 
+const initializer = ()=> {return({userId:Date.now(), name:"", email:""})}
 
 function UseReducerHook(){
     const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
-    const [state, dispatch] = useReducer(reducer,initialState,
-        ()=> {return({userId:Date.now(), name:"", email:""})});
+    const [state, dispatch] = useReducer(reducer,initialState,initializer);
 
+    const addContact = () => {
 
+    }
 
     return(
         <>
             <h1>useReducer Hook.</h1>
+            <form onSubmit={addContact}>
+                <input type={"text"} placeholder={"Contact name"} value={userName}
+                       onChange={(e) => setUserName(e.target.value)}/>
+
+                <input type={"text"} placeholder={"email"} value={email}
+                       onChange={(e) => setEmail(e.target.value)}/>
+                <button type={"submit"}>Add contact</button>
+            </form>
+
         </>
     );
 }
