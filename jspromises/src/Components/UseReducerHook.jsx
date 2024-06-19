@@ -8,7 +8,7 @@ function reducer(state, action) {
             return[...state, action.payload];
         case "delete":
             return state.filter((contact) => {
-                return action.payload.id !== contact.id;
+                return action.payload.id !== contact.userId;
             });
     }
 
@@ -31,7 +31,6 @@ function UseReducerHook(){
         setUserName("");
 
         dispatch({type:"add", payload:contact});
-
     }
 
     return(
@@ -49,10 +48,13 @@ function UseReducerHook(){
             <div>
                 <ol>
                     {state.map((contact) => {
-                        return(<li key={contact.userId}>
+                        return(
+                            <li key={contact.userId}>
                             <h2>{contact.name}</h2>
                             <h2>{contact.email}</h2>
-                        </li>)
+                            <button onClick={() => {dispatch({type:"delete", payload:{id:contact.userId}})}}>
+                                Delete</button>
+                        </li>);
                     })}
                 </ol>
             </div>
