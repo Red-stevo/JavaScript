@@ -27,6 +27,7 @@ function UseReducerHook(){
     const [email, setEmail] = useState("");
     const [state, dispatch] = useReducer(reducer,initialState,initializer);
     const [edit, setEdit] = useState(false);
+    const [date, setDate] = useState(Date.now);
 
     const addContact = (e) => {
         e.preventDefault();
@@ -42,16 +43,19 @@ function UseReducerHook(){
     const updateState = (e) => {
         e.preventDefault();
 
-        {dispatch({type:"update", payload:{userId:Date.now(), name:userName, email}})}
+        {dispatch({type:"update", payload:{userId:date, name:userName, email}})}
         //cleanup
         setEmail("");
         setUserName("");
+        setEdit(false);
     }
     const editMode = (e, contact) => {
         e.preventDefault();
 
         setEmail(contact.email);
         setUserName(contact.name);
+        setDate(contact.userId);
+        setEdit(true);
     }
 
     return(
