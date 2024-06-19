@@ -21,7 +21,16 @@ function UseReducerHook(){
     const [email, setEmail] = useState("");
     const [state, dispatch] = useReducer(reducer,initialState,initializer);
 
-    const addContact = () => {
+    const addContact = (e) => {
+        e.preventDefault();
+
+        const contact = {userId:Date.now(), name:userName, email}
+
+        //cleanup
+        setEmail("");
+        setUserName("");
+
+        dispatch({type:"add", payload:contact});
 
     }
 
